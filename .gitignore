@@ -1,0 +1,16 @@
+# === Secretos — NUNCA subir ===
+.env
+*.key
+*.pem
+secrets/
+backup/
+*credentials*.json
+
+# Dumps de base de datos / credenciales n8n
+*.dump
+*.sql
+
+# OS / editor
+.DS_Store
+*.swp
+node_modules/

@@ -1,0 +1,51 @@
+# docker-compose de referencia para recrear el stack n8n + postgres.
+#
+# NOTA: en el server original esto lo gestiona EasyPanel + Traefik (no este
+# compose). Este archivo es un equivalente portable para levantar n8n en
+# cualquier host. Ajusta dominios/red según tu entorno. Lee variables de .env.
+#
+# Levantar:   docker compose --env-file ../.env up -d
+# Versiones del original (jun-2026): n8nio/n8n:latest, postgres:17.
+
+services:
+  n8n-db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_POSTGRESDB_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DB_POSTGRESDB_DATABASE}
+    volumes:
+      - n8n_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_POSTGRESDB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    depends_on:
+      n8n-db:
+        condition: service_healthy
+    ports:
+      - "5678:5678"
+    environment:
+      DB_TYPE: ${DB_TYPE}
+      DB_POSTGRESDB_HOST: ${DB_POSTGRESDB_HOST}
+      DB_POSTGRESDB_PORT: ${DB_POSTGRESDB_PORT}
+      DB_POSTGRESDB_DATABASE: ${DB_POSTGRESDB_DATABASE}
+      DB_POSTGRESDB_USER: ${DB_POSTGRESDB_USER}
+      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+      N8N_HOST: ${N8N_HOST}
+      N8N_PROTOCOL: ${N8N_PROTOCOL}
+      WEBHOOK_URL: ${WEBHOOK_URL}
+      EXECUTIONS_DATA_PRUNE: "true"
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_db_data:
+  n8n_data:
