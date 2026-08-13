@@ -56,10 +56,4 @@ agenda-ameca/
 7. **Activar** ambos workflows y probar desde Telegram.
 8. (Opcional) **Conectar a Claude Code** siguiendo [`infra/mcp-setup.md`](infra/mcp-setup.md).
 
-## Liberar el server actual
 
-Subir este repo **no libera el server por sí solo**: el stack n8n sigue
-corriendo en Docker (EasyPanel). Para liberarlo de verdad, una vez confirmado
-que el repo está completo y respaldado en GitHub, hay que tumbar el stack
-(`n8n_n8n`, `n8n_n8n-db`, y opcionalmente EasyPanel/Traefik). Eso es
-**destructivo**: hazlo solo tras verificar el backup.
