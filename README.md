@@ -1,4 +1,4 @@
-# Agenda Ameca
+# Asistente Agenda
 
 Asistente conversacional en **n8n** para gestionar la agenda de la Presidencia
 Municipal de Ameca a través de Google Calendar. Este repo contiene **todo lo
