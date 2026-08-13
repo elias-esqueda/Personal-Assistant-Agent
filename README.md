@@ -27,14 +27,6 @@ agenda-ameca/
     └── gotchas.md
 ```
 
-## Qué se puede versionar y qué no
-
-| Va a GitHub ✅ | NO va a GitHub ❌ |
-|----------------|-------------------|
-| Workflows JSON (sin secretos) | API key de n8n |
-| docker-compose / infra | `N8N_ENCRYPTION_KEY` |
-| Documentación y `CLAUDE.md` | Tokens OAuth Google / bot Telegram |
-| `.env.example` (plantilla) | `.env` real, dumps de la DB |
 
 ## Recrear el proyecto desde cero
 
